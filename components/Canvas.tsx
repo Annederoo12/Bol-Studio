@@ -26,26 +26,31 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
           Start Over
       </button>
 
-      {/* Image Display or Placeholder */}
-      <div className="relative w-full h-full flex items-center justify-center">
-        {displayImageUrl ? (
-          <img
-            key={displayImageUrl} // Use key to force re-render and trigger animation on image change
-            src={displayImageUrl}
-            alt="Generated product scene"
-            className="max-w-full max-h-full object-contain transition-opacity duration-500 animate-fade-in rounded-lg"
-          />
-        ) : (
-            <div className="w-[400px] h-[400px] bg-gray-100 border border-gray-200 rounded-lg flex flex-col items-center justify-center">
-              <Spinner />
-              <p className="text-md font-serif text-gray-600 mt-4">Loading Product...</p>
-            </div>
-        )}
-        
-        <AnimatePresence>
+      <div className="w-full max-w-2xl aspect-square bg-white rounded-xl border border-gray-200/80 shadow-lg flex items-center justify-center p-2 relative overflow-hidden">
+          <AnimatePresence>
+              {displayImageUrl && !isLoading && (
+                  <motion.img
+                      key={displayImageUrl} // Force re-render on change
+                      src={displayImageUrl}
+                      alt="Product scene"
+                      className="max-w-full max-h-full object-contain rounded-lg"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                  />
+              )}
+          </AnimatePresence>
+          
+          {!displayImageUrl && !isLoading && (
+              <div className="text-center p-4 text-gray-400">
+                  <p className="font-serif">Your generated scene will appear here.</p>
+              </div>
+          )}
+          
+          <AnimatePresence>
           {isLoading && (
               <motion.div
-                  className="absolute inset-0 bg-white/80 backdrop-blur-md flex flex-col items-center justify-center z-20 rounded-lg"
+                  className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-20 rounded-xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -56,7 +61,7 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
                   )}
               </motion.div>
           )}
-        </AnimatePresence>
+          </AnimatePresence>
       </div>
     </div>
   );

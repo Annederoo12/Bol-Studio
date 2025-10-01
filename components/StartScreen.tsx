@@ -83,10 +83,9 @@ const StartScreen: React.FC<StartScreenProps> = ({ onProductFinalized }) => {
       </div>
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
         <Compare
-          firstImage="https://storage.googleapis.com/gemini-95-icons/soccer-ball-white-bg.jpg"
-          secondImage="https://storage.googleapis.com/gemini-95-icons/soccer-in-field.jpg"
-          slideMode="drag"
-          className="w-full max-w-sm aspect-[1/1] rounded-2xl bg-gray-200"
+          firstImage="https://storage.googleapis.com/gemini-95-icons/potty-trainer-product.jpg"
+          secondImage="https://storage.googleapis.com/gemini-95-icons/potty-trainer-lifestyle.jpg"
+          className="w-full max-w-lg aspect-[1/1] rounded-2xl bg-gray-200 shadow-xl"
         />
       </div>
     </motion.div>

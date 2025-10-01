@@ -24,13 +24,6 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
 
-  const displayImageUrl = useMemo(() => {
-    if (generatedScenes.length > 0) {
-      return generatedScenes[generatedScenes.length - 1].url;
-    }
-    return productImageUrl;
-  }, [generatedScenes, productImageUrl]);
-
   const handleProductFinalized = (url: string) => {
     setProductImageUrl(url);
     setGeneratedScenes([]);
@@ -74,6 +67,9 @@ const App: React.FC = () => {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -15 },
   };
+
+  const latestGeneratedSceneUrl = generatedScenes.length > 0 ? generatedScenes[generatedScenes.length - 1].url : null;
+  const displayImageUrl = latestGeneratedSceneUrl || productImageUrl;
 
   return (
     <div className="font-sans">
