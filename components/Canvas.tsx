@@ -23,7 +23,7 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
           className="absolute top-4 left-4 z-30 flex items-center justify-center text-center bg-white/60 border border-gray-300/80 text-gray-700 font-semibold py-2 px-4 rounded-full transition-all duration-200 ease-in-out hover:bg-white hover:border-gray-400 active:scale-95 text-sm backdrop-blur-sm"
       >
           <RotateCcwIcon className="w-4 h-4 mr-2" />
-          Start Over
+          Opnieuw beginnen
       </button>
 
       <div className="w-full max-w-2xl aspect-square bg-white rounded-xl border border-gray-200/80 shadow-lg flex items-center justify-center p-2 relative overflow-hidden">
@@ -43,7 +43,7 @@ const Canvas: React.FC<CanvasProps> = ({ displayImageUrl, onStartOver, isLoading
           
           {!displayImageUrl && !isLoading && (
               <div className="text-center p-4 text-gray-400">
-                  <p className="font-serif">Your generated scene will appear here.</p>
+                  <p className="font-serif">Je gegenereerde scène verschijnt hier.</p>
               </div>
           )}
           

@@ -164,7 +164,7 @@ export const Compare = ({
       {/* "Before" Image (bottom layer) */}
       <img
         src={secondImage}
-        alt="Generated lifestyle scene of product"
+        alt="Origineel product op een egale achtergrond"
         className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
         draggable={false}
       />
@@ -175,7 +175,7 @@ export const Compare = ({
         <img
           ref={afterImageRef}
           src={firstImage}
-          alt="Original product on plain background"
+          alt="Gegenereerde lifestyle scène van product"
           className="absolute top-0 left-0 h-full object-cover pointer-events-none max-w-none"
           draggable={false}
         />

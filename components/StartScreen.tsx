@@ -19,7 +19,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onProductFinalized }) => {
 
   const handleFileSelect = useCallback(async (file: File) => {
     if (!file.type.startsWith('image/')) {
-        setError('Please select an image file.');
+        setError('Selecteer alstublieft een afbeeldingsbestand.');
         return;
     }
     setError(null);
@@ -32,7 +32,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onProductFinalized }) => {
         onProductFinalized(dataUrl);
     };
     reader.onerror = () => {
-        setError(getFriendlyErrorMessage('Failed to read the selected file.', 'File Read Error'));
+        setError(getFriendlyErrorMessage('Kon het geselecteerde bestand niet lezen.', 'Fout bij het lezen van bestand'));
         setIsUploading(false);
     }
     reader.readAsDataURL(file);
@@ -63,28 +63,28 @@ const StartScreen: React.FC<StartScreenProps> = ({ onProductFinalized }) => {
       <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
         <div className="max-w-lg">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-gray-900 leading-tight">
-            Place Your Product in Any Scene.
+            Zie jouw product tot leven komen.
           </h1>
           <p className="mt-4 text-lg text-gray-600">
-            Ever wondered how your product would look in action? Stop guessing. Upload a photo and let our AI generate stunning lifestyle shots for your marketing.
+            Vervang dure fotoshoots en ugc modellen met een paar klikken.
           </p>
           <hr className="my-8 border-gray-200" />
           <div className="flex flex-col items-center lg:items-start w-full gap-3">
             <label htmlFor="image-upload-start" className={`w-full relative flex items-center justify-center px-8 py-3 text-base font-semibold text-white rounded-md transition-colors ${isUploading ? 'bg-gray-500 cursor-not-allowed' : 'bg-gray-900 hover:bg-gray-700 cursor-pointer'}`}>
               <UploadCloudIcon className="w-5 h-5 mr-3" />
-              {isUploading ? 'Processing...' : 'Upload Product Photo'}
+              {isUploading ? 'Verwerken...' : 'Upload productfoto'}
             </label>
             <input id="image-upload-start" type="file" className="hidden" accept="image/png, image/jpeg, image/webp, image/avif, image/heic, image/heif" onChange={handleFileChange} disabled={isUploading} />
-            <p className="text-gray-500 text-sm">Select a clear photo of your product, preferably on a simple background.</p>
-            <p className="text-gray-500 text-xs mt-1">By uploading, you agree not to create harmful, explicit, or unlawful content. This service is for creative and responsible use only.</p>
+            <p className="text-gray-500 text-sm">Selecteer een duidelijke foto van je product, bij voorkeur op een eenvoudige achtergrond.</p>
+            <p className="text-gray-500 text-xs mt-1">Door te uploaden, ga je ermee akkoord geen schadelijke, expliciete of onwettige inhoud te creëren. Deze service is alleen voor creatief en verantwoordelijk gebruik.</p>
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           </div>
         </div>
       </div>
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
         <Compare
-          firstImage="https://storage.googleapis.com/gemini-95-icons/potty-trainer-product.jpg"
-          secondImage="https://storage.googleapis.com/gemini-95-icons/potty-trainer-lifestyle.jpg"
+          firstImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/Image2.jpeg"
+          secondImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/Image1.jpeg"
           className="w-full max-w-lg aspect-[1/1] rounded-2xl bg-gray-200 shadow-xl"
         />
       </div>

@@ -43,7 +43,7 @@ const App: React.FC = () => {
 
     setError(null);
     setIsLoading(true);
-    setLoadingMessage(`Generating scene...`);
+    setLoadingMessage(`Scène genereren...`);
 
     try {
       // Always generate from the original, clean product image for best results.
@@ -55,7 +55,7 @@ const App: React.FC = () => {
       };
       setGeneratedScenes(prev => [...prev, newScene]);
     } catch (err) {
-      setError(getFriendlyErrorMessage(err, 'Failed to generate scene'));
+      setError(getFriendlyErrorMessage(err, 'Het genereren van de scène is mislukt'));
     } finally {
       setIsLoading(false);
       setLoadingMessage('');
@@ -114,14 +114,14 @@ const App: React.FC = () => {
                   <button 
                     onClick={() => setIsSheetCollapsed(!isSheetCollapsed)} 
                     className="md:hidden w-full h-8 flex items-center justify-center bg-gray-100/50"
-                    aria-label={isSheetCollapsed ? 'Expand panel' : 'Collapse panel'}
+                    aria-label={isSheetCollapsed ? 'Paneel uitvouwen' : 'Paneel samenvouwen'}
                   >
                     {isSheetCollapsed ? <ChevronUpIcon className="w-6 h-6 text-gray-500" /> : <ChevronDownIcon className="w-6 h-6 text-gray-500" />}
                   </button>
                   <div className="p-4 md:p-6 pb-20 overflow-y-auto flex-grow flex flex-col gap-8">
                     {error && (
                       <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md" role="alert">
-                        <p className="font-bold">Error</p>
+                        <p className="font-bold">Fout</p>
                         <p>{error}</p>
                       </div>
                     )}
@@ -131,7 +131,7 @@ const App: React.FC = () => {
                     />
                     {generatedScenes.length > 0 && (
                        <div className="pt-6 border-t border-gray-400/50">
-                        <h2 className="text-xl font-serif tracking-wider text-gray-800 mb-3">History</h2>
+                        <h2 className="text-xl font-serif tracking-wider text-gray-800 mb-3">Geschiedenis</h2>
                         <div className="grid grid-cols-3 gap-3">
                           {[...generatedScenes].reverse().map(scene => (
                             <div key={scene.id} className="relative aspect-square border rounded-lg overflow-hidden group" title={scene.prompt}>

@@ -6,12 +6,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const REMIX_SUGGESTIONS = [
-  "Remix idea: Generate a marketing campaign slogan for the scene.",
-  "Remix idea: Create variations of the scene (day, night, different seasons).",
-  "Remix idea: Add text overlays for social media posts.",
-  "Remix idea: Let users save their favorite generated scenes.",
-  "Remix idea: Animate the generated scene into a short video clip.",
-  "Remix idea: Generate different colorways for the product.",
+  "Remix-idee: Genereer een slogan voor een marketingcampagne voor de scène.",
+  "Remix-idee: Creëer variaties van de scène (dag, nacht, verschillende seizoenen).",
+  "Remix-idee: Voeg tekstoverlays toe voor posts op sociale media.",
+  "Remix-idee: Laat gebruikers hun favoriete gegenereerde scènes opslaan.",
+  "Remix-idee: Animeer de gegenereerde scène tot een korte videoclip.",
+  "Remix-idee: Genereer verschillende kleurstellingen voor het product.",
 ];
 
 interface FooterProps {
@@ -31,18 +31,7 @@ const Footer: React.FC<FooterProps> = ({ isOnDressingScreen = false }) => {
 
   return (
     <footer className={`fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-200/60 p-3 z-50 ${isOnDressingScreen ? 'hidden sm:block' : ''}`}>
-      <div className="mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-gray-600 max-w-7xl px-4">
-        <p>
-          Created by{' '}
-          <a 
-            href="https://x.com/ammaar" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="font-semibold text-gray-800 hover:underline"
-          >
-            @ammaar
-          </a>
-        </p>
+      <div className="mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-end text-xs text-gray-600 max-w-7xl px-4">
         <div className="h-4 mt-1 sm:mt-0 flex items-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.p

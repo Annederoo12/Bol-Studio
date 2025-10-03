@@ -7,14 +7,14 @@ import type { WardrobeItem } from './types';
 
 // Suggested scene prompts for the AI
 export const defaultScenePrompts: string[] = [
-  "A person playing with the product in a sunny park",
-  "On a professional sports field during a match",
-  "In a high-end sports store display window",
-  "Close-up on grass with morning dew",
-  "In a trophy case with medals",
-  "A child looking at the product with excitement",
-  "On a shelf in a teenager's bedroom",
-  "In a backpack with other sports gear",
+  "Een persoon die met het product speelt in een zonnig park",
+  "Op een professioneel sportveld tijdens een wedstrijd",
+  "In de etalage van een luxe sportwinkel",
+  "Close-up op gras met ochtenddauw",
+  "In een prijzenkast met medailles",
+  "Een kind dat opgewonden naar het product kijkt",
+  "Op een plank in een tienerkamer",
+  "In een rugzak met andere sportuitrusting",
 ];
 
 // FIX: Define and export defaultWardrobe.

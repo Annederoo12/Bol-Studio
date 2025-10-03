@@ -21,7 +21,7 @@ const dataUrlToPart = (dataUrl: string) => {
 const handleApiResponse = (response: GenerateContentResponse): string => {
     if (response.promptFeedback?.blockReason) {
         const { blockReason, blockReasonMessage } = response.promptFeedback;
-        const errorMessage = `Request was blocked. Reason: ${blockReason}. ${blockReasonMessage || ''}`;
+        const errorMessage = `Verzoek geblokkeerd. Reden: ${blockReason}. ${blockReasonMessage || ''}`;
         throw new Error(errorMessage);
     }
 
@@ -36,16 +36,16 @@ const handleApiResponse = (response: GenerateContentResponse): string => {
 
     const finishReason = response.candidates?.[0]?.finishReason;
     if (finishReason && finishReason !== 'STOP') {
-        const errorMessage = `Image generation stopped unexpectedly. Reason: ${finishReason}. This often relates to safety settings.`;
+        const errorMessage = `Het genereren van de afbeelding is onverwacht gestopt. Reden: ${finishReason}. Dit heeft vaak te maken met veiligheidsinstellingen.`;
         throw new Error(errorMessage);
     }
     const textFeedback = response.text?.trim();
-    const errorMessage = `The AI model did not return an image. ` + (textFeedback ? `The model responded with text: "${textFeedback}"` : "This can happen due to safety filters or if the request is too complex. Please try a different image or prompt.");
+    const errorMessage = `Het AI-model heeft geen afbeelding geretourneerd. ` + (textFeedback ? `Het model reageerde met tekst: "${textFeedback}"` : "Dit kan gebeuren door veiligheidsfilters of als het verzoek te complex is. Probeer een andere afbeelding of prompt.");
     throw new Error(errorMessage);
 };
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-const model = 'gemini-2.5-flash-image-preview';
+const model = 'gemini-2.5-flash-image';
 
 
 export const generateProductScene = async (productImageUrl: string, sceneDescription: string): Promise<string> => {
@@ -58,6 +58,10 @@ export const generateProductScene = async (productImageUrl: string, sceneDescrip
 3.  The product must be the main focus and integrated naturally with proper lighting, shadows, perspective, and scale.
 4.  If the scene description implies interaction (e.g., 'a person holding the product'), generate the person and the interaction realistically.
 5.  The final image should look like a professional photograph.
+
+**Output Specifications:**
+*   **Aspect Ratio:** The final image must be perfectly square (1:1 aspect ratio).
+*   **Resolution:** The image should be high-resolution, aiming for 1200x1200 pixels.
 
 **Scene Description:** "${sceneDescription}"
 

@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getFriendlyErrorMessage(error: unknown, context: string): string {
-    let rawMessage = 'An unknown error occurred.';
+    let rawMessage = 'Er is een onbekende fout opgetreden.';
     if (error instanceof Error) {
         rawMessage = error.message;
     } else if (typeof error === 'string') {
@@ -27,13 +27,13 @@ export function getFriendlyErrorMessage(error: unknown, context: string): string
             const nestedMessage = errorJson?.error?.message;
             if (nestedMessage && nestedMessage.includes("Unsupported MIME type")) {
                 const mimeType = nestedMessage.split(': ')[1] || 'unsupported';
-                return `File type '${mimeType}' is not supported. Please use a format like PNG, JPEG, or WEBP.`;
+                return `Bestandstype '${mimeType}' wordt niet ondersteund. Gebruik alstublieft een formaat zoals PNG, JPEG of WEBP.`;
             }
         } catch (e) {
             // Not a JSON string, but contains the text. Fallthrough to generic message.
         }
         // Generic fallback for any "Unsupported MIME type" error
-        return `Unsupported file format. Please upload an image format like PNG, JPEG, or WEBP.`;
+        return `Niet-ondersteund bestandsformaat. Upload alstublieft een afbeeldingsformaat zoals PNG, JPEG of WEBP.`;
     }
     
     return `${context}. ${rawMessage}`;
