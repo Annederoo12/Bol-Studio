@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import StartScreen from './components/StartScreen';
 import Canvas from './components/Canvas';
@@ -14,7 +14,10 @@ import { ChevronDownIcon, ChevronUpIcon } from './components/icons';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { getFriendlyErrorMessage } from './lib/utils';
-import Spinner from './components/Spinner';
+import { getCreditData, isFreeGenerationAvailable, useCredit, addCredits } from './lib/credits';
+import BuyCreditsModal from './components/BuyCreditsModal';
+import { useAuth } from './contexts/AuthContext';
+
 
 const App: React.FC = () => {
   const [productImageUrl, setProductImageUrl] = useState<string | null>(null);
@@ -23,6 +26,24 @@ const App: React.FC = () => {
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
+
+  // Credit & Auth System State
+  const [credits, setCredits] = useState(0);
+  const [lastFreeGeneration, setLastFreeGeneration] = useState(0);
+  const [showBuyCreditsModal, setShowBuyCreditsModal] = useState(false);
+  
+  const { user, signInWithGoogle } = useAuth();
+
+  // Load credit data from local storage on initial render
+  useEffect(() => {
+    const data = getCreditData();
+    setCredits(data.credits);
+    setLastFreeGeneration(data.lastFreeGeneration);
+  }, []);
+
+  const freeCreditAvailable = useMemo(() => {
+    return isFreeGenerationAvailable(lastFreeGeneration);
+  }, [lastFreeGeneration]);
 
   const handleProductFinalized = (url: string) => {
     setProductImageUrl(url);
@@ -38,8 +59,40 @@ const App: React.FC = () => {
     setIsSheetCollapsed(false);
   };
 
+  const attemptToUseCredit = (): boolean => {
+    const result = useCredit();
+    if (result.success) {
+      setCredits(result.credits);
+      setLastFreeGeneration(result.lastFreeGeneration);
+      return true;
+    } else {
+      setShowBuyCreditsModal(true);
+      return false;
+    }
+  };
+
+  const handleInitiatePurchase = async () => {
+    setShowBuyCreditsModal(false); // Close the buy modal first
+    let currentUser = user;
+
+    // If user is not logged in, prompt them to sign in.
+    if (!currentUser) {
+      currentUser = await signInWithGoogle();
+    }
+
+    // If login is successful (or user was already logged in), proceed with purchase.
+    if (currentUser) {
+      const updatedData = addCredits(10);
+      setCredits(updatedData.credits);
+    }
+    // If login fails, currentUser will be null, and we do nothing.
+  };
+
   const handleGenerateScene = useCallback(async (prompt: string) => {
     if (!productImageUrl || isLoading) return;
+
+    const canGenerate = attemptToUseCredit();
+    if (!canGenerate) return;
 
     setError(null);
     setIsLoading(true);
@@ -96,7 +149,10 @@ const App: React.FC = () => {
             exit="exit"
             transition={{ duration: 0.5, ease: 'easeInOut' }}
           >
-            <Header />
+            <Header 
+              credits={credits} 
+              onBuyCredits={handleInitiatePurchase} 
+            />
             <main className="flex-grow relative flex flex-col md:flex-row overflow-hidden">
               <div className="w-full h-full flex-grow flex items-center justify-center bg-white pb-16 relative">
                 <Canvas 
@@ -128,6 +184,8 @@ const App: React.FC = () => {
                     <SceneGeneratorPanel
                       onGenerateScene={handleGenerateScene}
                       isLoading={isLoading}
+                      credits={credits}
+                      isFreeCreditAvailable={freeCreditAvailable}
                     />
                     {generatedScenes.length > 0 && (
                        <div className="pt-6 border-t border-gray-400/50">
@@ -151,6 +209,11 @@ const App: React.FC = () => {
         )}
       </AnimatePresence>
       <Footer isOnDressingScreen={!!productImageUrl} />
+      <BuyCreditsModal 
+        isOpen={showBuyCreditsModal}
+        onClose={() => setShowBuyCreditsModal(false)}
+        onBuy={handleInitiatePurchase}
+      />
     </div>
   );
 };

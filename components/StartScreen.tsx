@@ -79,12 +79,13 @@ const StartScreen: React.FC<StartScreenProps> = ({ onProductFinalized }) => {
             <p className="text-gray-500 text-xs mt-1">Door te uploaden, ga je ermee akkoord geen schadelijke, expliciete of onwettige inhoud te creëren. Deze service is alleen voor creatief en verantwoordelijk gebruik.</p>
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           </div>
+
         </div>
       </div>
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
         <Compare
-          firstImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/Image2.jpeg"
-          secondImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/Image1.jpeg"
+          firstImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/test.jpg"
+          secondImage="https://storage.googleapis.com/ai-studio-bucket-203192049701-us-west1/services/bol-studio/version-1/compiled/ImagesHomePage/Image2.jpeg"
           className="w-full max-w-lg aspect-[1/1] rounded-2xl bg-gray-200 shadow-xl"
         />
       </div>
